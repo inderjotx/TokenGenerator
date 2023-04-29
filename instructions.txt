@@ -1,0 +1,6 @@
+1. programmatically creating token , using name , symbol and initial supply
+2. adding images from unsplash as logo
+3. automatically adding those tokens to metamask , and verifying the code on etherscan 
+4. browser connection
+5. changing the blockChain
+

@@ -4,3 +4,4 @@
 4. browser connection
 5. changing the blockChain
 
+mongodb+srv://inderjotsingh:9878344133@tokendatabase.d4g2b3r.mongodb.net/?retryWrites=true&w=majority

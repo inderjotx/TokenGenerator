@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const URL = "mongodb+srv://inderjotsingh:9878344133@tokendatabase.d4g2b3r.mongodb.net/?retryWrites=true&w=majority"
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/myapp', {
+mongoose.connect(URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })

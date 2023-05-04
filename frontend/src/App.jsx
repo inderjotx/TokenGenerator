@@ -1,6 +1,7 @@
 import { useState,useEffect } from 'react'
 import {Create, burn, mint, pause , unPause} from './createToken';
 import { ethers,  } from 'ethers'
+import Card from './Card';
 import Background from './Background.svg'
 import CreateForm from './CreateForm.svg'
 import { Button, Form, Input, Row, Col, Select } from 'antd';
@@ -54,8 +55,8 @@ function App() {
   const [tokenSymbol, setTokenSymbol] = useState("");
   const [tokenUrl, setTokenUrl] = useState("");
   const [tokenInitialSupply, setInitialSupply] = useState();
-  const [tokenAddress, settokenAddress] = useState("")
-  
+  const [ chainName, setchainName ] = useState("mumbai");
+  const [ createdTokens, setCreatedTokens ] = useState([]);
 
 
 
@@ -64,9 +65,10 @@ function App() {
       const accounts = await provider.send('eth_requestAccounts', []);
       setaccount(accounts[0]);
       setSigner(provider.getSigner());
+      // getPrevTokens();
     }
-    getAccounts();
-  }, [])
+     getAccounts();
+  }, [createdTokens])
 
 
   async function deployToken(){
@@ -76,9 +78,11 @@ function App() {
     console.log(tokenInitialSupply);
     console.log(signer);
     const token = await Create(tokenName, tokenSymbol, tokenInitialSupply, signer);
+    const contractAddress = token.address;
+    console.log(contractAddress);
     await token.deployTransaction.wait(3);
-    settokenAddress(token.address);
-    addOnMetaMask();
+    await storeToken(contractAddress);
+    await addOnMetaMask(contractAddress);
 
   }
 
@@ -91,10 +95,10 @@ function App() {
   }
 
   async function getMoreTokens(){
-     await mint( tokenAddress , signer, 100, account);
+    //  await mint( tokenAddress , signer, 100, account);
   }
 
-  async function addOnMetaMask(){
+  async function addOnMetaMask(contractAddress){
     try {
       // wasAdded is a boolean. Like any RPC method, an error can be thrown.
       const wasAdded = await ethereum.request({
@@ -102,7 +106,7 @@ function App() {
         params: {
           type: 'ERC20', 
           options: {
-            address: tokenAddress,
+            address: contractAddress,
             symbol: tokenSymbol, // A ticker symbol or shorthand, up to 5 characters.
             decimals: 18, // The number of decimals in the token.
             image: tokenUrl, // A string URL of the token logo.
@@ -122,12 +126,83 @@ function App() {
 
 
   async function changeChain(e){
-    const chainName = e;
+    setchainName(e);
     console.log(chainName);
     await window.ethereum.request({
       method: 'wallet_switchEthereumChain',
       params: [{ chainId: ID[chainName] }],
     });
+  }
+
+
+  async function storeToken(contractAddress){
+
+      
+    const object = {
+      creator : account,
+      imageUrl : tokenUrl,
+      name : tokenName,
+      symbol : tokenSymbol,
+      chain : chainName,
+      contract : contractAddress
+    }
+
+    console.log(object);
+
+    fetch('http://localhost:3000/tokens', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(object)
+        })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(data => {
+            console.log(data);
+          })
+          .catch(error => {
+            console.error(error);
+          });
+
+  }
+
+  async function changePage(){
+    const tokens = await getPrevTokens();
+    setCreatedTokens( tokens );
+    console.log("outside")
+    console.log(createdTokens);
+
+  }
+
+  async function getPrevTokens(){
+
+    fetch(`http://localhost:3000/tokens?address=${account}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log("Inside the fetch")
+          console.log(data);
+          return data;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+
+
   }
 
 
@@ -257,6 +332,16 @@ function App() {
           </Col>
         </Row>
       </Form>
+      <Button
+                        ghost
+                        type="primary"
+                        shape="round"
+                        size='large'
+                        style={{ borderColor :'#08FFE1' , color : '#08FFE1' }}
+                        onClick={() => changePage()}
+                      >
+                       Console
+                  </Button>
     </div>
   </div>
         </section>
@@ -266,7 +351,7 @@ function App() {
       (currentPage === 'console')
       &&
       <section id='console'>
-
+        <Card tokens={createdTokens} />
       </section>
      }
 </>

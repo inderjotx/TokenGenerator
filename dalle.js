@@ -13,7 +13,7 @@ async function main(prompt){
         const openai = new OpenAIApi(configuration);
         const response = await openai.createImage({
         prompt: prompt,
-        n: 1,
+        n: 4,
         size: "512x512",
         });
     
@@ -32,6 +32,6 @@ async function main(prompt){
 
 }
 
-main(" Hawk with golden wings flying in blue sky and wings are giving off flame");
+main("animated gothic black dragon flying in black night");
 
 

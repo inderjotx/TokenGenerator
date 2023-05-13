@@ -13,4 +13,4 @@ catch (error){
 }
 }
 
-getImages( "crest");
+getImages( "pokemon");

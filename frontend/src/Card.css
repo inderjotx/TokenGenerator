@@ -1,22 +1,114 @@
 .container {
-    padding: 120px;
+    padding: 10px;
+    margin: 10px 10px 0 20px;
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
+
 }
 
 .creditCard {
-    width: 360px;
     margin: 10px;
-    height: 220px;
     background-color: hsla(0, 100%, 50%, 1);
-    background-image: radial-gradient(at 48% 24%, hsla(28, 100%, 74%, 1) 0px, transparent 50%),
-        radial-gradient(at 80% 0%, hsla(189, 100%, 56%, 1) 0px, transparent 50%),
-        radial-gradient(at 0% 50%, hsla(355, 100%, 93%, 1) 0px, transparent 50%),
-        radial-gradient(at 78% 46%, hsla(340, 100%, 76%, 1) 0px, transparent 50%),
-        radial-gradient(at 0% 100%, hsla(22, 100%, 77%, 1) 0px, transparent 50%),
-        radial-gradient(at 83% 98%, hsla(242, 100%, 70%, 1) 0px, transparent 50%),
-        radial-gradient(at 0% 0%, hsla(343, 100%, 76%, 1) 0px, transparent 50%);
+    background-color: hsla(215, 100%, 50%, 0.91);
+    background-color: #99ddff;
+    background-image:
+        radial-gradient(at 14% 11%, hsla(309, 69%, 72%, 1) 0px, transparent 50%),
+        radial-gradient(at 3% 2%, hsla(352, 67%, 76%, 1) 0px, transparent 50%),
+        radial-gradient(at 30% 98%, hsla(260, 85%, 70%, 1) 0px, transparent 50%),
+        radial-gradient(at 83% 70%, hsla(301, 61%, 64%, 1) 0px, transparent 50%),
+        radial-gradient(at 22% 23%, hsla(252, 95%, 60%, 1) 0px, transparent 50%),
+        radial-gradient(at 6% 87%, hsla(176, 60%, 63%, 1) 0px, transparent 50%),
+        radial-gradient(at 93% 14%, hsla(19, 95%, 70%, 1) 0px, transparent 50%);
 
     border-radius: 10px;
+}
+
+
+
+.cardButton {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    background: hsl(249, 100%, 82%)
+}
+
+
+.cardButton:hover {
+    cursor: pointer;
+    background-color: hsl(249, 90%, 77%);
+}
+
+
+.circle {
+    border: 4px solid #6b64f3;
+    border-top: 4px solid #0c0924;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+.success::before {
+    color: greenyellow;
+    content: "\2714";
+}
+
+.fail::before {
+    content: "\274C";
+    /* Unicode value for a cross mark symbol */
+}
+
+
+.cardInput {
+    color: black;
+    border: 2px solid #B2A4FF;
+    border-radius: 10px;
+    padding: 10px 25px;
+    background: transparent;
+    max-width: 190px;
+}
+
+.cardInput {
+    color: black;
+    border: 2px solid #B2A4FF;
+    border-radius: 10px;
+    padding: 10px 25px;
+    background: transparent;
+    max-width: 190px;
+}
+
+.cardInput:focus {
+    outline: none;
+    border-color: #B2A4FF;
+    /* Change border color on focus */
+}
+
+.cardInput::-webkit-outer-spin-button,
+.cardInput::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    /* Remove up/down arrows */
+    margin: 0;
+    /* Remove margin */
+}
+
+.cardInput[type="number"] {
+    -moz-appearance: textfield;
+    /* Remove up/down arrows on Firefox */
+}
+
+.cardInput::-webkit-input-placeholder {
+    /* Customize placeholder color */
+    color: #8C8C8C;
 }

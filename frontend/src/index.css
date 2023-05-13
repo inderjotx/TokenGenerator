@@ -1,0 +1,13 @@
+body {
+    background-color: #212121;
+}
+
+@font-face {
+    font-family: 'Popins';
+    src: url('/path/to/Popins-Regular.ttf') format('truetype');
+}
+
+
+body {
+    font-family: 'Popins', sans-serif;
+}

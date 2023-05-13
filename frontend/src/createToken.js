@@ -2,7 +2,6 @@ import { ethers, BigNumber } from 'ethers';
 import Token from './artifacts/contracts/Token.sol/Token';
 
 export  async function Create( name, symbol , initialSupply , signer ) {
-  console.log('called ..');
   const factory = new ethers.ContractFactory(
     Token.abi,
     Token.bytecode,
@@ -21,14 +20,16 @@ export async function pause(address, signer){
 export async function unPause(address, signer){
   const token = new ethers.Contract(address, Token.abi , signer);
   await token.unpause();
+  
 }
 
 
-export async function mint(address, signer, amount, beneficiary ){
-
+export async function mint(address, signer, amount){
+  const beneficiary = await signer.getAddress();
   const token = new ethers.Contract(address, Token.abi , signer);
   const bigAmount = BigNumber.from(amount).mul(BigNumber.from(10).pow(18));
-  await token.mint( beneficiary , bigAmount);
+  const transaction = await token.mint( beneficiary , bigAmount);
+  
 
 }
 

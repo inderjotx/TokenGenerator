@@ -3,6 +3,19 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const db = require('./db');
 const Token = require('./Token');
+const axios = require('axios');
+const { Configuration , OpenAIApi } = require("openai");
+
+require('dotenv').config();
+
+const UNSPLASH_API_KEY = process.env.UNSPLASH_API_KEY;
+const DALLE_API_KEY = process.env.OPENAI_API_KEY;
+
+
+const configuration = new Configuration({
+  apiKey: DALLE_API_KEY,
+});
+const openai = new OpenAIApi(configuration);
 
 const app = express();
 app.use(cors());
@@ -28,13 +41,51 @@ app.get('/tokens', (req, res) => {
       
 });
 
+app.get('/unsplash', (req, res) => {
+  const { query } = req.query;
+
+  axios.get(`https://api.unsplash.com/search/photos?query=${query}&client_id=${UNSPLASH_API_KEY}&per_page=50`)
+    .then(response =>   response.data)
+    .then(images => {
+      const array = images.results.map(obj => obj.urls.regular);
+      res.status(200).json(array);
+    })
+    .catch(error => {
+      res.status(400).json({ error: 'Bad Request' });
+    });
+});
+
+
+app.get( '/dalle', (req, res) => {
+
+  const { query } = req.query;
+
+  console.log(query);
+
+      openai.createImage({
+      prompt: query,
+      n: 4,
+      size: "512x512",
+      }).then( (response) => {
+        const images = response.data.data.map( (obj) => obj.url );
+        res.status(200).json(images);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(400).json( { error : 'Bad Request'})
+      })
+
+  
+})
+
+
 // POST endpoint
 app.post('/tokens', (req, res) => {
     const { creator, imageUrl, name, symbol, chain, contract } = req.body;
     
     // Create a new token with the given details
     const token = new Token({ creator, imageUrl, name, symbol, chain, contract });
-    console.log(token);
+   
     // Save the token to the database
     
 

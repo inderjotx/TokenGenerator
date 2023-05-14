@@ -272,7 +272,7 @@ function App() {
        &&
       <section id='home'>
           <div style={home}>
-              <div style={{ position : 'absolute', left : '118px', top: '346px'}}>
+              <div style={{ position : 'absolute', left : '150px', top: '360px'}}>
                   <Button
                         ghost
                         type="primary"

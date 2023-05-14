@@ -444,7 +444,7 @@ function App() {
        : 
         <div style={{ position : 'absolute', top : '30%', left : '30%' }}>
         <p style={{ color : 'red', fontSize : '40px'}}> { !isActive ? "Connect MetaMask First !" : "No Token Found"}</p>
-        </div> }  
+        </div> } 
       </section>
       </>
      }

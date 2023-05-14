@@ -6,7 +6,7 @@
       "use": "@vercel/node"
     }
   ],
-  "routes": [
+  "rewrites": [
     {
       "source": "/(.*)",
       "destination": "/server.js"
@@ -18,7 +18,7 @@
       "headers": [
         {
           "key": "Access-Control-Allow-Origin",
-          "value": "http://localhost:5173 , http://localhost:4173 "
+          "value": "http://localhost:5173, http://localhost:4173"
         },
         {
           "key": "Access-Control-Allow-Methods",

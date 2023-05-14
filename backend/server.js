@@ -18,7 +18,11 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 const app = express();
-app.use(cors());
+
+app.use(cors({ 
+  origin: ['http://localhost:5173', 'https://example.com'] 
+}));
+
 const port = 3000;
 
 // parse application/json

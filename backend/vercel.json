@@ -1,0 +1,20 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "server.js",
+            "use": "@vercel/node"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "/server.js"
+        }
+    ],
+    "env": {
+        "UNSPLASH_API_KEY": "gB0SsxZoVm-GJGWfR57yi5LS70gaiKeOQbLW-IGqv8s",
+        "OPENAI_API_KEY": "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",
+        "URL": "mongodb+srv://inderjotsingh:9878344133@tokendatabase.d4g2b3r.mongodb.net/?retryWrites=true&w=majority"
+    }
+}

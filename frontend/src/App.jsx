@@ -48,6 +48,7 @@ function App() {
   const [prompt, setprompt] = useState("")
   const [ imageData, setImageData ] = useState([]);
   const [ finding, setfinding ] = useState(10);
+  const [isActive, setisActive] = useState(false);
 
 
 
@@ -69,7 +70,9 @@ function App() {
 
 
   useEffect ( () => {
-    window.ethereum.request({ method: 'eth_requestAccounts' })
+
+    if (isActive)  {
+      window.ethereum.request({ method: 'eth_requestAccounts' })
       .then( ( accounts) => {
         if ( accounts[0] != account){
           setSigner(provider.getSigner())
@@ -77,6 +80,13 @@ function App() {
           
         }
       })
+
+    }
+    else{
+      console.log("No active yet")
+    }
+
+
   })
 
 
@@ -288,7 +298,7 @@ function App() {
           
         }}>
         <button className='create explore' style={{ marginTop : '10px'}} value={ currentPage == 'console' ? "create" : "console"}  onClick={(e) => setCurrentPage(e.target.value)} >{currentPage == 'console' ? "Create" : 'Console'}</button>
-                <MetaMask  provider={provider} setSigner={setSigner} setaccount={setaccount} setchainName={setchainName}/>
+                <MetaMask  provider={provider} setSigner={setSigner} setaccount={setaccount} setchainName={setchainName} isActive={isActive} setisActive={setisActive} />
                 
                 <Select
                 style={{
@@ -430,10 +440,10 @@ function App() {
       &&
       <>
       <section id='console'>
-       { tokenData?.length > 0 ? <Card tokens={tokenData}  signer={signer}/> :
-        
-        <div style={{ position : 'absolute', top : '30%', left : '40%' }}>
-        <p style={{ color : 'red', fontSize : '40px'}}> No Token Found</p>
+       { tokenData?.length > 0 ? <Card tokens={tokenData}  signer={signer}/> 
+       : 
+        <div style={{ position : 'absolute', top : '30%', left : '30%' }}>
+        <p style={{ color : 'red', fontSize : '40px'}}> { !isActive ? "Connect MetaMask First !" : "No Token Found"}</p>
         </div> }  
       </section>
       </>

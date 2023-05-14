@@ -4,7 +4,7 @@ import  {   InActive } from'./inactive.jsx';
 import './inactive.jsx'
 import { getCurrentChainName } from './changeChain.js'
 
-export default function MetaMask({provider, setaccount, setSigner, setchainName}){
+export default function MetaMask({provider, setaccount, setSigner, setchainName, isActive, setisActive}){
 
      function connect(){
         if ( !isActive){
@@ -27,8 +27,7 @@ export default function MetaMask({provider, setaccount, setSigner, setchainName}
 
     }
 
-    const [isActive, setisActive] = useState(false);
-
+    
     return (
         <>
             <button style={{ border: "none", backgroundColor: "transparent", color: "inherit", font: "inherit", cursor: "pointer", outline: "none", marginTop : '15px'}} onClick={ () => connect()}>

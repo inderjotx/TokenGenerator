@@ -161,7 +161,7 @@ function App() {
 
     console.log(object);
 
-    fetch("http://localhost:3000/tokens", {
+    fetch("https://backend-token-generator.vercel.app/tokens", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -184,7 +184,7 @@ function App() {
 
   async function getPrevTokens() {
     const response = await fetch(
-      `http://localhost:3000/tokens?address=${account}`,
+      `https://backend-token-generator.vercel.app/tokens?address=${account}`,
       {
         method: "GET",
         headers: {
@@ -205,12 +205,15 @@ function App() {
   async function getImages() {
     setfinding(0);
     setImageData([]);
-    fetch(`http://localhost:3000/${imageEndPoint}?query=${prompt}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    fetch(
+      `https://backend-token-generator.vercel.app/${imageEndPoint}?query=${prompt}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then((response) => {
         if (!response.ok) {
           throw new Error(" Bad request");

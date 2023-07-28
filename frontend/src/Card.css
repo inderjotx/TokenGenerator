@@ -9,34 +9,28 @@
 
 .creditCard {
     margin: 10px;
-    background-color: hsla(0, 100%, 50%, 1);
-    background-color: hsla(215, 100%, 50%, 0.91);
-    background-color: #99ddff;
-    background-image:
-        radial-gradient(at 14% 11%, hsla(309, 69%, 72%, 1) 0px, transparent 50%),
-        radial-gradient(at 3% 2%, hsla(352, 67%, 76%, 1) 0px, transparent 50%),
-        radial-gradient(at 30% 98%, hsla(260, 85%, 70%, 1) 0px, transparent 50%),
-        radial-gradient(at 83% 70%, hsla(301, 61%, 64%, 1) 0px, transparent 50%),
-        radial-gradient(at 22% 23%, hsla(252, 95%, 60%, 1) 0px, transparent 50%),
-        radial-gradient(at 6% 87%, hsla(176, 60%, 63%, 1) 0px, transparent 50%),
-        radial-gradient(at 93% 14%, hsla(19, 95%, 70%, 1) 0px, transparent 50%);
-
-    border-radius: 10px;
+    background-color: #202123;
+    color : #fff;
+    border: 1px solid #333333;
 }
 
-
+.creditCard:hover{
+ box-shadow: 0px 0px 30px 1px #c17171;
+ border-radius: 10px;
+ border-color: #f48f8f;
+}
 
 .cardButton {
     padding: 5px 10px;
     border-radius: 5px;
     border: none;
-    background: hsl(249, 100%, 82%)
+    background-color: #f48f8f;
 }
 
 
 .cardButton:hover {
     cursor: pointer;
-    background-color: hsl(249, 90%, 77%);
+    background-color: #c17171 ;
 }
 
 
@@ -71,27 +65,18 @@
 }
 
 
-.cardInput {
-    color: black;
-    border: 2px solid #B2A4FF;
-    border-radius: 10px;
-    padding: 10px 25px;
-    background: transparent;
-    max-width: 190px;
-}
 
 .cardInput {
-    color: black;
-    border: 2px solid #B2A4FF;
+    border: 2px solid #f48f8f;
     border-radius: 10px;
     padding: 10px 25px;
     background: transparent;
     max-width: 190px;
+    color : white;
 }
 
 .cardInput:focus {
     outline: none;
-    border-color: #B2A4FF;
     /* Change border color on focus */
 }
 

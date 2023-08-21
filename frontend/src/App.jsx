@@ -506,6 +506,7 @@ function App() {
                   gap: "5px",
                   justifyContent: "center",
                 }}
+                className="scrollbar-style"
               >
                 {imageData?.length > 0 ? (
                   imageData.map((url) => {

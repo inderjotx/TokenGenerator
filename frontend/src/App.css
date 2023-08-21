@@ -1,6 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Montez&display=swap');
 
 
+/* #console{
+    overflow-y: scroll;
+    scrollbar-color: #222222 #000;
+} */
+
+.scrollbar-style::-webkit-scrollbar-track {
+  background: #dddddd; /* Set the background color of the track */
+}
+
+
 #dottedLines {
     animation: move-line 2s linear infinite;
 }

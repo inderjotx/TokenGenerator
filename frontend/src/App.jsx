@@ -100,13 +100,15 @@ function App() {
 
       const contractAddress = token.address;
 
-      await token.deployTransaction.wait(3);
-      storeToken(contractAddress).then((data) => {
+      // parallel execution
+      Promise.all([
+        token.deployTransaction.wait(3),
+        storeToken(contractAddress),
+      ]).then(async () => {
         setisCreating(1);
         makeDefault();
+        await addOnMetaMask(contractAddress);
       });
-
-      await addOnMetaMask(contractAddress);
     } catch {
       setisCreating(-1);
     }

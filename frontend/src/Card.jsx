@@ -12,8 +12,6 @@ const ID = {
 };
 
 export default function Card({ tokens, signer }) {
-  console.log(tokens);
-
   async function sameChain() {
     console.log(ID[tokens[active].chain]);
     await changeChain(ID[tokens[active].chain]);

@@ -56,7 +56,7 @@ function App() {
   const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
-    console.log(account);
+    console.log("feching...");
     getPrevTokens()
       .then((tokens) => {
         settokenData(tokens);
@@ -97,11 +97,15 @@ function App() {
         tokenInitialSupply,
         signer
       );
+
       const contractAddress = token.address;
+
       await token.deployTransaction.wait(3);
-      await storeToken(contractAddress);
-      setisCreating(1);
-      makeDefault();
+      storeToken(contractAddress).then((data) => {
+        setisCreating(1);
+        makeDefault();
+      });
+
       await addOnMetaMask(contractAddress);
     } catch {
       setisCreating(-1);
@@ -159,47 +163,46 @@ function App() {
       contract: contractAddress,
     };
 
-    console.log(object);
-
-    fetch("https://backend-token-generator.vercel.app/tokens", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(object),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-
-  async function getPrevTokens() {
-    const response = await fetch(
-      `https://backend-token-generator.vercel.app/tokens?address=${account}`,
-      {
-        method: "GET",
+    return new Promise((res, rej) => {
+      fetch("https://backend-token-generator.vercel.app/tokens", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-      }
-    );
+        body: JSON.stringify(object),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            rej(response);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          res(data);
+        })
+        .catch((error) => {
+          rej(error);
+        });
+    });
+  }
 
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-
-    const data = await response.json();
-    console.log(data);
-    return data;
+  async function getPrevTokens() {
+    return new Promise((res, rej) => {
+      fetch(
+        `https://backend-token-generator.vercel.app/tokens?address=${account}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+        .then((data) => data.json())
+        .then((data) => res(data))
+        .catch((err) => {
+          rej(err);
+        });
+    });
   }
 
   async function getImages() {
